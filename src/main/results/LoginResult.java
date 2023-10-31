@@ -2,8 +2,7 @@ package results;
 
 import requests.LoginRequest;
 
-public class LoginResult {
-    private String message;
+public class LoginResult extends DefaultResult{
     private String authToken;
     private String username;
 
@@ -18,14 +17,6 @@ public class LoginResult {
         this.message = message;
         this.authToken = authToken;
         this.username = username;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getAuthToken() {

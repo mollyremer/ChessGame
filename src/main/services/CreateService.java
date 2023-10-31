@@ -18,7 +18,6 @@ public class CreateService {
      */
     public CreateResult create(CreateRequest request) throws DataAccessException {
         GameDAO gameDAO = new GameDAO();
-
         ChessGameImpl gameImpl = new ChessGameImpl();
 
         int gameID = gameCount;
