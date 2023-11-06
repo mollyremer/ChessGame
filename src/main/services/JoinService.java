@@ -19,12 +19,12 @@ public class JoinService {
      * @return The response from the server.
      */
     public DefaultResult join(JoinRequest request) throws DataAccessException {
-        UserDAO userDAO = new UserDAO();
         AuthDAO authDAO = new AuthDAO();
         GameDAO gameDAO = new GameDAO();
-
         ChessGame.TeamColor playercolor;
         int gameID;
+
+
         try {
             playercolor = request.getPlayerColor();
             gameID = request.getGameID();

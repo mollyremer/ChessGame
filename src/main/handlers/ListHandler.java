@@ -1,6 +1,5 @@
 package handlers;
 
-import com.google.gson.Gson;
 import requests.DefaultRequest;
 import results.ListResult;
 import services.ListService;
@@ -8,35 +7,24 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.Objects;
-
-public class ListHandler implements Route {
+public class ListHandler extends HandlerParent implements Route {
 
     @Override
     public Object handle(Request req, Response res) throws Exception {
-        Gson gson = new Gson();
-        String strAuthToken = null;
+        DefaultRequest request = new DefaultRequest();
+        ListService service = new ListService();
 
         try {
-            strAuthToken = req.headers("Authorization");
-            System.out.println(strAuthToken);
+            authToken = req.headers("Authorization");
         } catch (Exception e){
-            res.status(401);
-            ListResult result = new ListResult(null, "Error: unauthorized");
-            return gson.toJson(result);
+            ListResult myResult = new ListResult(null, "Error: unauthorized");
+            return jsonResult(res, myResult);
         }
 
-        DefaultRequest request = new DefaultRequest(strAuthToken);
-        ListService service = new ListService();
+        request.setStrAuthToken(authToken);
+
         ListResult result = service.list(request);
 
-        res.status(200);
-        if (Objects.equals(result.getMessage(), "Error: unauthorized")){
-            res.status(401);
-        } else if (result.getMessage() != null) {
-            res.status(500);
-        }
-
-        return gson.toJson(result);
+        return jsonResult(res, result);
     }
 }

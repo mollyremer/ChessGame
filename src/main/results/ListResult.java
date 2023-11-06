@@ -1,28 +1,16 @@
 package results;
 
-import java.lang.reflect.Array;
-import java.util.Collection;
-
-public class ListResult {
+public class ListResult extends DefaultResult{
     /**
      * games A collection of ListEntryResult objects
      */
     Object[] games;
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    String message;
-
     public ListResult(Object[] games, String message) {
         this.games = games;
         this.message = message;
     }
+
 
     public static class ListEntryResult {
         public int gameID;

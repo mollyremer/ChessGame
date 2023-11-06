@@ -1,6 +1,12 @@
 package requests;
 
 public class DefaultRequest {
+    String strAuthToken = null;
+    public DefaultRequest(){}
+    public DefaultRequest(String strAuthToken) {
+        this.strAuthToken = strAuthToken;
+    }
+
     public String getStrAuthToken() {
         return strAuthToken;
     }
@@ -9,9 +15,4 @@ public class DefaultRequest {
         this.strAuthToken = strAuthToken;
     }
 
-    public DefaultRequest(String strAuthToken) {
-        this.strAuthToken = strAuthToken;
-    }
-
-    String strAuthToken;
 }
