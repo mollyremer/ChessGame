@@ -1,10 +1,9 @@
 package dataAccess;
 
 import chess.ChessGame;
-import chess.impl.ChessGameImpl;
 import models.Game;
 
-import static dataAccess.Database.dbGames;
+import static dataAccess.TreeDatabase.dbGames;
 
 public class GameDAO {
     public static int gameCount = 1;

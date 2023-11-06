@@ -3,16 +3,8 @@ package services;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
-import models.Game;
 import requests.DefaultRequest;
-import requests.LoginRequest;
-import results.DefaultResult;
 import results.ListResult;
-
-import java.lang.reflect.Array;
-import java.util.Collection;
-
-import static dataAccess.Database.dbGames;
 
 public class ListService {
     /**

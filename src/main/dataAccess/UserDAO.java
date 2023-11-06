@@ -1,14 +1,8 @@
 package dataAccess;
 
-import models.Game;
 import models.User;
 
-import java.util.Collection;
-import java.util.Objects;
-import java.util.UUID;
-
-import static dataAccess.Database.dbGames;
-import static dataAccess.Database.dbUsers;
+import static dataAccess.TreeDatabase.dbUsers;
 
 public class UserDAO {
 

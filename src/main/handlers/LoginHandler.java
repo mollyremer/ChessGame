@@ -10,8 +10,6 @@ import spark.Route;
 
 import java.util.Objects;
 
-import static dataAccess.Database.dbUsers;
-
 public class LoginHandler implements Route {
     @Override
     public Object handle(Request req, Response res) throws Exception {

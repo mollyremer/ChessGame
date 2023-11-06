@@ -1,15 +1,10 @@
 package dataAccess;
 
 import models.AuthToken;
-import models.User;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.UUID;
 
-import static dataAccess.Database.dbAuthTokens;
-import static dataAccess.Database.dbUsers;
+import static dataAccess.TreeDatabase.dbAuthTokens;
 
 public class AuthDAO {
     /**

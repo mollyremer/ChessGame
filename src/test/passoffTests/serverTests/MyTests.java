@@ -7,7 +7,7 @@ import requests.*;
 import results.*;
 import services.*;
 
-import static dataAccess.Database.*;
+import static dataAccess.TreeDatabase.*;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

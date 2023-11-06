@@ -6,8 +6,6 @@ import dataAccess.GameDAO;
 import dataAccess.UserDAO;
 import results.DefaultResult;
 
-import static dataAccess.Database.*;
-
 public class ClearService {
     /**
      * Clears the database. Removes all users, games, and authTokens.
