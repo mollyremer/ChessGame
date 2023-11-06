@@ -66,7 +66,7 @@ public class MyTests {
         @Order(3)
         @DisplayName("Positive User Login")
         public void successLogin() throws DataAccessException {
-            LoginRequest loginRequest = new LoginRequest("user1", "password1");
+            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
             LoginResult loginResult = service.login(loginRequest);
 
             Assertions.assertNull(loginResult.getMessage(), "There shouldn't be an error message");
@@ -78,7 +78,7 @@ public class MyTests {
         @Order(4)
         @DisplayName("Negative User Login")
         public void negativeLogin() throws DataAccessException {
-            LoginRequest loginRequest = new LoginRequest("user1", "badPassword");
+            LoginRequest loginRequest = new LoginRequest("user1", "badPassword", null);
             LoginResult loginResult = service.login(loginRequest);
 
             Assertions.assertEquals("Error: unauthorized", loginResult.getMessage(), "There should be an error message");
@@ -106,7 +106,7 @@ public class MyTests {
         @DisplayName("Positive User Logout")
         public void positiveLogout() throws DataAccessException {
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1");
+            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
             LoginResult loginResult = loginService.login(loginRequest);
             String strAuthToken = loginResult.getAuthToken();
 
@@ -145,7 +145,7 @@ public class MyTests {
             RegisterRequest registerRequest = new RegisterRequest("user1", "password1", "email1");
             RegisterResult registerResult = registerService.register(registerRequest);
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1");
+            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
             LoginResult loginResult = loginService.login(loginRequest);
             String strAuthToken = loginResult.getAuthToken();
         }
@@ -155,7 +155,7 @@ public class MyTests {
         @DisplayName("Positive Create Game")
         public void positiveCreateGame() throws DataAccessException {
             String gameName = "gameName1";
-            CreateRequest createRequest = new CreateRequest(gameName);
+            CreateRequest createRequest = new CreateRequest(gameName, null);
             CreateResult createResult = service.create(createRequest);
 
             Assertions.assertNull(createResult.getMessage(), "There shouldn't be an error message");
@@ -168,7 +168,7 @@ public class MyTests {
         @DisplayName("Negative Create Game")
         public void negativeCreateGame() throws DataAccessException {
             String gameName = "gameName1";
-            CreateRequest createRequest = new CreateRequest(gameName);
+            CreateRequest createRequest = new CreateRequest(gameName, null);
             CreateResult createResult = service.create(createRequest);
 
             Assertions.assertNull(createResult.getMessage(), "There shouldn't be an error message");
@@ -191,12 +191,12 @@ public class MyTests {
             RegisterRequest registerRequest = new RegisterRequest("user1", "password1", "email1");
             RegisterResult registerResult = registerService.register(registerRequest);
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1");
+            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
             LoginResult loginResult = loginService.login(loginRequest);
             strAuthToken = loginResult.getAuthToken();
             CreateService createService = new CreateService();
             String gameName = "gameName1";
-            CreateRequest createRequest = new CreateRequest(gameName);
+            CreateRequest createRequest = new CreateRequest(gameName, null);
             CreateResult createResult = createService.create(createRequest);
         }
 
@@ -239,15 +239,15 @@ public class MyTests {
             RegisterRequest registerRequest = new RegisterRequest("user1", "password1", "email1");
             RegisterResult registerResult = registerService.register(registerRequest);
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1");
+            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
             LoginResult loginResult = loginService.login(loginRequest);
             strAuthToken = loginResult.getAuthToken();
             CreateService createService = new CreateService();
             String gameName = "gameName1";
-            CreateRequest createRequest = new CreateRequest(gameName);
+            CreateRequest createRequest = new CreateRequest(gameName, null);
             CreateResult createResult = createService.create(createRequest);
             String gameName2 = "gameName2";
-            CreateRequest createRequest2 = new CreateRequest(gameName2);
+            CreateRequest createRequest2 = new CreateRequest(gameName2, null);
             CreateResult createResult2 = createService.create(createRequest2);
         }
 

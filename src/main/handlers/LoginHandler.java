@@ -10,34 +10,23 @@ import spark.Route;
 
 import java.util.Objects;
 
-public class LoginHandler implements Route {
+import static dataAccess.TreeDatabase.dbUsers;
+
+public class LoginHandler extends HandlerParent implements Route {
     @Override
     public Object handle(Request req, Response res) throws Exception {
-        System.out.println("handling login request....");
-        System.out.println("Request Body: " + req.body());
-
-        Gson gson = new Gson();
-        LoginRequest request;
-
-        try {
-            request = gson.fromJson(req.body(), LoginRequest.class);
-        } catch (Exception e) {
-            LoginResult result = new LoginResult(null, null, "Error: bad request");
-            res.status(400);
-            return gson.toJson(result);
-        }
-
+        LoginRequest myRequest;
         LoginService service = new LoginService();
 
-        LoginResult result = service.login(request);
-
-        res.status(200);
-        if (Objects.equals(result.getMessage(), "Error: unauthorized")){
-            res.status(401);
-        } else if (result.getMessage() != null) {
-            res.status(500);
+        try {
+            myRequest = gson.fromJson(req.body(), LoginRequest.class);
+        } catch (Exception e) {
+            LoginResult myResult = new LoginResult(null, null, "Error: bad request");
+            return jsonResult(res, myResult);
         }
 
-        return gson.toJson(result);
+        LoginResult myResult = service.login(myRequest);
+
+        return jsonResult(res, myResult);
     }
 }

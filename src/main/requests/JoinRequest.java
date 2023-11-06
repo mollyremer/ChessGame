@@ -2,21 +2,11 @@ package requests;
 
 import chess.ChessGame;
 
-public class JoinRequest {
+public class JoinRequest extends DefaultRequest{
     ChessGame.TeamColor playerColor;
     int gameID;
 
-    String strAuthToken;
-
     public JoinRequest() {}
-
-    public String getStrAuthToken() {
-        return strAuthToken;
-    }
-
-    public void setStrAuthToken(String strAuthToken) {
-        this.strAuthToken = strAuthToken;
-    }
 
     /**
      * Constructs a JoinRequest with the provided playerColor and gameID.

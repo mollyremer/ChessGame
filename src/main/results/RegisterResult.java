@@ -4,13 +4,12 @@ import models.AuthToken;
 import requests.RegisterRequest;
 import spark.Response;
 
-public class RegisterResult{
+public class RegisterResult extends DefaultResult{
     /**
      * username The provided username
      */
     String username;
     String authToken;
-    String message;
 
     public RegisterResult(String username, String authToken, String message){
         this.username = username;
@@ -32,13 +31,5 @@ public class RegisterResult{
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
