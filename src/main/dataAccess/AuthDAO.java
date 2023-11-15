@@ -2,18 +2,10 @@ package dataAccess;
 
 import models.AuthToken;
 
-import java.util.UUID;
-
-import static dataAccess.TreeDatabase.dbAuthTokens;
+import java.sql.SQLException;
 
 public class AuthDAO {
-    /**
-     * Generates a random authTokens.
-     * @return an authToken string.
-     */
-    public String generateAuthTokenStr() {
-        return UUID.randomUUID().toString();
-    }
+    private final Database db = new Database();
 
     /**
      * Inserts an authToken into the database.
@@ -21,7 +13,17 @@ public class AuthDAO {
      * @throws DataAccessException Error thrown when data cannot be accessed.
      */
     public void insertAuthToken(AuthToken authTokenObj) throws DataAccessException{
-        dbAuthTokens.put(authTokenObj.getAuthToken(), authTokenObj);
+        var connection = db.getConnection();
+        String sql = "INSERT INTO auth_tokens (authToken, username) VALUES (? ,?)";
+        try (var preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, authTokenObj.getAuthToken());
+            preparedStatement.setString(2, authTokenObj.getUsername());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            throw new DataAccessException(e.getMessage());
+        } finally {
+            db.closeConnection(connection);
+        }
     }
 
     /**
@@ -31,7 +33,23 @@ public class AuthDAO {
      * @throws DataAccessException Error thrown when data cannot be accessed.
      */
     public AuthToken findAuthToken(String authToken) throws DataAccessException{
-        return dbAuthTokens.getOrDefault(authToken, null);
+        var connection = db.getConnection();
+        String sql = "SELECT * FROM auth_tokens WHERE authToken = ?";
+        try (var preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, authToken);
+            try (var resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()){
+                    return new AuthToken(resultSet.getString("authToken"),
+                            resultSet.getString("username"));
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        } finally {
+            db.closeConnection(connection);
+        }
     }
 
     /**
@@ -40,11 +58,19 @@ public class AuthDAO {
      * @throws DataAccessException Error thrown when data cannot be accessed.
      */
     public void removeAuthToken(AuthToken authTokenObj) throws DataAccessException{
-        if(findAuthToken(authTokenObj.getAuthToken()) == null){
-            throw new DataAccessException("Could not remove auth, does not exist");
-        }
-        else {
-            dbAuthTokens.remove(authTokenObj.getAuthToken(), authTokenObj);
+        var connection = db.getConnection();
+        String sql = "DELETE FROM auth_tokens WHERE authToken = ?";
+        try (var preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, authTokenObj.getAuthToken());
+            int rowsDeleted = preparedStatement.executeUpdate();
+
+            if (rowsDeleted == 0){
+                throw new DataAccessException("AuthToken doesn't exist in the db");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error deleting AuthToken: " + e.getMessage());
+        } finally {
+            db.closeConnection(connection);
         }
     }
 
@@ -54,7 +80,16 @@ public class AuthDAO {
      * @throws DataAccessException Error thrown when data cannot be accessed.
      */
     public void clear() throws DataAccessException{
-        dbAuthTokens.clear();
+        var connection = db.getConnection();
+        String sql = "DELETE FROM auth_tokens";
+        try {
+            var preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("Error deleting authTokens: " + e.getMessage());
+        } finally {
+            db.closeConnection(connection);
+        }
     }
 
 }

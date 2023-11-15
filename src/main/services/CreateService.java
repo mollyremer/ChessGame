@@ -8,7 +8,6 @@ import requests.CreateRequest;
 import results.CreateResult;
 import results.DefaultResult;
 
-import static dataAccess.GameDAO.gameCount;
 
 public class CreateService {
     /**
@@ -20,9 +19,11 @@ public class CreateService {
         GameDAO gameDAO = new GameDAO();
         ChessGameImpl gameImpl = new ChessGameImpl();
 
-        int gameID = gameCount;
-        Game game = new Game(gameID, null, null, request.getGameName(), gameImpl);
-        gameCount++;
+        if(request.getGameName() == null){
+            throw new DataAccessException("Error: bad request");
+        }
+
+        Game game = new Game(0, null, null, request.getGameName(), gameImpl);
 
         gameDAO.insertGame(game);
 

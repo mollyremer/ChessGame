@@ -31,4 +31,7 @@ public interface ChessBoard {
     void removePiece(ChessPosition startPosition);
 
     Set<Map.Entry<ChessPosition, ChessPiece>> getAllPieces(ChessGame.TeamColor color);
+
+    String serialize();
+
 }

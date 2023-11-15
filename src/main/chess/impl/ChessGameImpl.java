@@ -2,6 +2,7 @@ package chess.impl;
 
 import chess.*;
 import chess.chessPieces.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,8 +10,36 @@ import java.util.Map;
 import java.util.Set;
 
 public class ChessGameImpl implements ChessGame {
-    private TeamColor teamTurn;
-    private ChessBoard currentBoard;
+    private TeamColor teamTurn = TeamColor.WHITE;
+    private ChessBoard currentBoard = new ChessBoardImpl();
+
+    public String serialize(){
+        String s = "";
+        if (teamTurn == TeamColor.WHITE) {
+            s += "W";
+        } else {
+            s += "B";
+        }
+
+        s += currentBoard.serialize();
+
+        return s;
+    }
+
+    public ChessGameImpl(String s){
+        if (s.charAt(0) == 'W'){ teamTurn = TeamColor.WHITE;
+        } else if (s.charAt(0) == 'B') { teamTurn = TeamColor.BLACK;
+        } else {
+            System.out.println("Problem deserializing in chess game impl");
+        }
+        s = s.substring(1);
+
+        currentBoard = new ChessBoardImpl(s);
+    }
+
+    public ChessGameImpl(){
+        currentBoard.resetBoard();
+    }
     @Override
     public TeamColor getTeamTurn() {
         return teamTurn;

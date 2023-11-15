@@ -8,6 +8,9 @@ import models.User;
 import requests.RegisterRequest;
 import results.RegisterResult;
 
+import java.util.Objects;
+import java.util.UUID;
+
 public class RegisterService {
     /**
      * Register a new user.
@@ -34,18 +37,23 @@ public class RegisterService {
 
         User user = new User(username, password, email);
 
-        if (userDAO.findUser(user.getUsername()) != null) {
+        if (userDAO.findUserByUsername(user.getUsername()) != null) {
             return new RegisterResult(null, null, "Error: already taken");
         }
 
         try {
             userDAO.insertUser(user);
         } catch (DataAccessException e) {
-            throw new DataAccessException(e.getMessage());
+            if (Objects.equals(e.getMessage(), "Error: already taken")){
+                return new RegisterResult(null, null, "Error: already taken");
+            }
+            else{
+                return new RegisterResult(null, null, e.getMessage());
+            }
         }
 
 
-        String strAuthToken = authDAO.generateAuthTokenStr();
+        String strAuthToken = UUID.randomUUID().toString();
         AuthToken objAuthToken = new AuthToken(strAuthToken, username);
         authDAO.insertAuthToken(objAuthToken);
 

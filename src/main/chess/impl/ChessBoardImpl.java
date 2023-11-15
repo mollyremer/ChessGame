@@ -1,19 +1,74 @@
 package chess.impl;
 
-import chess.ChessBoard;
-import chess.ChessGame;
-import chess.ChessPiece;
-import chess.ChessPosition;
+import chess.*;
 import chess.chessPieces.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ChessBoardImpl implements ChessBoard {
     private Map<ChessPosition, ChessPiece> board = new HashMap<ChessPosition, ChessPiece>();
     static final int BOARD_SIZE = 9;
+
+    public String serialize(){
+        StringBuilder s = new StringBuilder();
+
+        for (Map.Entry<ChessPosition, ChessPiece> entry : board.entrySet()){
+            ChessPosition position = entry.getKey();
+            s.append(position.getRow());
+            s.append(position.getColumn());
+
+            ChessPiece piece = entry.getValue();
+            if(piece.getTeamColor() == ChessGame.TeamColor.WHITE){
+                s.append("W");
+            } else {
+                s.append("B");
+            }
+
+            switch (piece.getPieceType()) {
+                case PAWN -> s.append("P");
+                case KNIGHT -> s.append("N");
+                case ROOK -> s.append("R");
+                case BISHOP -> s.append("B");
+                case QUEEN -> s.append("Q");
+                case KING -> s.append("K");
+            }
+        }
+
+        return s.toString();
+    }
+    public ChessBoardImpl(){
+    }
+
+    public ChessBoardImpl(String s){
+        while (!s.isEmpty()){
+            int row, col;
+            ChessGame.TeamColor pieceColor;
+            ChessPiece piece = null;
+
+            row = s.charAt(0);
+            col = s.charAt(1);
+            ChessPosition position = new ChessPositionImpl(row, col);
+
+            if (s.charAt(2) == 'W'){
+                pieceColor = ChessGame.TeamColor.WHITE;
+            } else {
+                pieceColor = ChessGame.TeamColor.BLACK;
+            }
+
+            switch (s.charAt(3)){
+                case 'P' -> piece = new PawnPiece(pieceColor);
+                case 'N' -> piece = new KnightPiece(pieceColor);
+                case 'B' -> piece = new BishopPiece(pieceColor);
+                case 'R' -> piece = new RookPiece(pieceColor);
+                case 'K' -> piece = new KingPiece(pieceColor);
+                case 'Q' -> piece = new QueenPiece(pieceColor);
+            }
+
+            addPiece(position, piece);
+
+            s = s.substring(4);
+        }
+    }
 
     @Override
     public void addPiece(ChessPosition position, ChessPiece piece) {

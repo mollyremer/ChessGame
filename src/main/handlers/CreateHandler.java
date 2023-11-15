@@ -1,6 +1,7 @@
 package handlers;
 
 import dataAccess.AuthDAO;
+import dataAccess.DataAccessException;
 import requests.CreateRequest;
 import results.DefaultResult;
 import services.CreateService;
@@ -34,7 +35,12 @@ public class CreateHandler extends HandlerParent implements Route {
             return jsonResult(res, myResult);
         }
 
-        myResult = service.create(myRequest);
+        try {
+            myResult = service.create(myRequest);
+        } catch (DataAccessException e){
+            myResult.setMessage("Error: bad request");
+            return jsonResult(res, myResult);
+        }
 
         return jsonResult(res, myResult);
     }

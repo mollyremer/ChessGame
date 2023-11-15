@@ -4,12 +4,11 @@ import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.UserDAO;
 import models.AuthToken;
-import models.User;
 import requests.LoginRequest;
 import results.LoginResult;
-import results.RegisterResult;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class LoginService {
     /**
@@ -29,15 +28,15 @@ public class LoginService {
             return new LoginResult(null, null, "Error: bad request");
         }
 
-        if (userDAO.findUser(username) == null) {
+        if (userDAO.findUserByUsername(username) == null) {
             return new LoginResult(null, null, "Error: unauthorized");
         }
 
-        if (!Objects.equals(userDAO.findUser(username).getPassword(), password)){
+        if (!Objects.equals(userDAO.findUserByUsername(username).getPassword(), password)){
             return new LoginResult(null,null, "Error: unauthorized" );
         }
 
-        String strAuthToken = authDAO.generateAuthTokenStr();
+        String strAuthToken = UUID.randomUUID().toString();
         AuthToken objAuthToken = new AuthToken(strAuthToken, username);
         authDAO.insertAuthToken(objAuthToken);
 
