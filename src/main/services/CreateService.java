@@ -6,7 +6,6 @@ import dataAccess.GameDAO;
 import models.Game;
 import requests.CreateRequest;
 import results.CreateResult;
-import results.DefaultResult;
 
 
 public class CreateService {

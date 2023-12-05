@@ -14,7 +14,7 @@ public class LogoutService {
     public DefaultResult logout(DefaultRequest request){
         try{
             AuthDAO authDAO = new AuthDAO();
-            AuthToken objAuthToken = authDAO.findAuthToken(request.getStrAuthToken());
+            AuthToken objAuthToken = authDAO.findAuthToken(request.getAuthToken());
             authDAO.removeAuthToken(objAuthToken);
         } catch (Exception e){
             return new DefaultResult("Error: unauthorized");

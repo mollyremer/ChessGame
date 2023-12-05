@@ -1,15 +1,12 @@
 package dataAccess;
-import chess.ChessBoard;
 import chess.ChessGame;
-import chess.ChessPosition;
 import chess.impl.ChessGameImpl;
 import models.Game;
+import results.ListResult;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -61,6 +58,9 @@ public class GameDAO {
         if (game == null){
             throw new DataAccessException("Error: null game");
         }
+        String gameString = game.getGame().serialize();
+
+
         var connection = db.getConnection();
         String sql = "INSERT INTO games (gameID, whiteUsername, blackUsername, gameName, game) VALUES (?, ?, ?, ?, ?)";
         try (var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -70,8 +70,6 @@ public class GameDAO {
             preparedStatement.setString(2, game.getWhiteUsername());
             preparedStatement.setString(3, game.getBlackUsername());
             preparedStatement.setString(4, game.getGameName());
-
-            String gameString = game.getGame().serialize();
             preparedStatement.setString(5, gameString);
             preparedStatement.executeUpdate();
             var result = preparedStatement.getGeneratedKeys();
@@ -116,23 +114,19 @@ public class GameDAO {
      * @return all the games in Object[]
      * @throws DataAccessException Error thrown when data cannot be accessed.
      */
-    public Object[] findAllGames() throws DataAccessException{
-        Collection<Game> games = new HashSet<>();
+    public ArrayList<ListResult.GameInformation> findAllGames() throws DataAccessException{
+        ArrayList<ListResult.GameInformation> games = new ArrayList<>();
         var connection = db.getConnection();
         String sql = "SELECT * FROM games";
         try (var preparedStatement = connection.prepareStatement(sql)){
             try (var resultSet = preparedStatement.executeQuery()){
                 while (resultSet.next()){
-                    //FIXME: deserialize
-//                    var game = gsonBuilder.create().fromJson(resultSet.getString("game"), ChessGameImpl.class);
-                    ChessGameImpl game = new ChessGameImpl(resultSet.getString("game"));
-                    games.add(new Game(resultSet.getInt("gameID"),
-                                        resultSet.getString("whiteUsername"),
-                                        resultSet.getString("blackUsername"),
-                                        resultSet.getString("gameName"),
-                                        game));
+                    games.add(new ListResult.GameInformation(resultSet.getInt("gameID"),
+                            resultSet.getString("whiteUsername"),
+                            resultSet.getString("blackUsername"),
+                            resultSet.getString("gameName")));
                 }
-                return games.toArray();
+                return games;
             }
         } catch (SQLException e){
             throw new RuntimeException(e);

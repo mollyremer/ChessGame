@@ -6,6 +6,7 @@ import dataAccess.UserDAO;
 import models.AuthToken;
 import requests.LoginRequest;
 import results.LoginResult;
+import results.RegisterResult;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -25,6 +26,10 @@ public class LoginService {
             username = request.getUsername();
             password = request.getPassword();
         } catch (Exception e) {
+            return new LoginResult(null, null, "Error: bad request");
+        }
+
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()){
             return new LoginResult(null, null, "Error: bad request");
         }
 

@@ -1,9 +1,5 @@
 package results;
 
-import models.AuthToken;
-import requests.RegisterRequest;
-import spark.Response;
-
 public class RegisterResult extends DefaultResult{
     /**
      * username The provided username
@@ -17,6 +13,10 @@ public class RegisterResult extends DefaultResult{
         this.message = message;
     }
 
+    public RegisterResult(String username, String authToken){
+        this.username = username;
+        this.authToken = authToken;
+    }
     public String getUsername() {
         return username;
     }

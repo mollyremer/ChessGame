@@ -9,10 +9,9 @@ public class LoginRequest extends DefaultRequest{
      * @param username The username associated with the login request.
      * @param password The password associated with the login request.
      */
-    public LoginRequest(String username, String password, String strAuthToken){
+    public LoginRequest(String username, String password){
         this.username = username;
         this.password = password;
-        this.strAuthToken = strAuthToken;
     }
 
     public String getUsername() {

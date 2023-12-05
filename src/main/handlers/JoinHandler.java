@@ -28,7 +28,7 @@ public class JoinHandler extends HandlerParent implements Route {
             return jsonResult(res, myResult);
         }
 
-        myRequest.setStrAuthToken(authToken);
+        myRequest.setAuthToken(authToken);
         myResult = service.join(myRequest);
 
         return jsonResult(res, myResult);

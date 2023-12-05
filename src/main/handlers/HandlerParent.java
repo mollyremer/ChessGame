@@ -25,8 +25,13 @@ public class HandlerParent {
     }
 
     public Object jsonResult(Response res, DefaultResult result){
-        setResStatus(res, result);
-        return gson.toJson(result);
+        try {
+            setResStatus(res, result);
+            return gson.toJson(result);
+        } catch (Exception e){
+            System.out.println("Here's the error at least");
+        }
+        return null;
     }
 
 }

@@ -31,7 +31,7 @@ public class RegisterService {
             return new RegisterResult(null, null, "Error: bad request");
         }
 
-        if (username == null || password == null || email == null){
+        if (username == null || password == null || email == null || username.isEmpty() || password.isEmpty() || email.isEmpty()){
             return new RegisterResult(null, null, "Error: bad request");
         }
 

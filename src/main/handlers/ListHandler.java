@@ -21,7 +21,7 @@ public class ListHandler extends HandlerParent implements Route {
             return jsonResult(res, myResult);
         }
 
-        request.setStrAuthToken(authToken);
+        request.setAuthToken(authToken);
 
         ListResult result = service.list(request);
 

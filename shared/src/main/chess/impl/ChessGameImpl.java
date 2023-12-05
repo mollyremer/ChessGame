@@ -2,7 +2,6 @@ package chess.impl;
 
 import chess.*;
 import chess.chessPieces.*;
-import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.HashSet;

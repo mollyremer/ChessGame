@@ -16,7 +16,12 @@ public class JoinRequest extends DefaultRequest{
     public JoinRequest(ChessGame.TeamColor playerColor, int gameID, String strAuthToken){
         this.playerColor = playerColor;
         this.gameID = gameID;
-        this.strAuthToken = strAuthToken;
+        this.authToken = strAuthToken;
+    }
+
+    public JoinRequest(ChessGame.TeamColor playerColor, int gameID){
+        this.playerColor = playerColor;
+        this.gameID = gameID;
     }
 
     public ChessGame.TeamColor getPlayerColor() {

@@ -6,7 +6,7 @@ import chess.chessPieces.*;
 import java.util.*;
 
 public class ChessBoardImpl implements ChessBoard {
-    private Map<ChessPosition, ChessPiece> board = new HashMap<ChessPosition, ChessPiece>();
+    private Map<ChessPosition, ChessPiece> board = new HashMap<>();
     static final int BOARD_SIZE = 9;
 
     public String serialize(){
@@ -37,6 +37,7 @@ public class ChessBoardImpl implements ChessBoard {
         return s.toString();
     }
     public ChessBoardImpl(){
+        resetBoard();
     }
 
     public ChessBoardImpl(String s){
@@ -113,13 +114,13 @@ public class ChessBoardImpl implements ChessBoard {
         ChessPosition pos13 = new ChessPositionImpl(1, 3);
         addPiece(pos13, wBishop1);
 
-        ChessPiece wQueen = new QueenPiece(ChessGame.TeamColor.WHITE);
-        ChessPosition pos14 = new ChessPositionImpl(1, 4);
-        addPiece(pos14, wQueen);
-
         ChessPiece wKing = new KingPiece(ChessGame.TeamColor.WHITE);
-        ChessPosition pos15 = new ChessPositionImpl(1, 5);
+        ChessPosition pos15 = new ChessPositionImpl(1, 4);
         addPiece(pos15, wKing);
+
+        ChessPiece wQueen = new QueenPiece(ChessGame.TeamColor.WHITE);
+        ChessPosition pos14 = new ChessPositionImpl(1, 5);
+        addPiece(pos14, wQueen);
 
         ChessPiece wBishop2 = new BishopPiece(ChessGame.TeamColor.WHITE);
         ChessPosition pos16 = new ChessPositionImpl(1, 6);
@@ -146,13 +147,13 @@ public class ChessBoardImpl implements ChessBoard {
         ChessPosition pos83 = new ChessPositionImpl(8, 3);
         addPiece(pos83, bBishop1);
 
-        ChessPiece bQueen = new QueenPiece(ChessGame.TeamColor.BLACK);
-        ChessPosition pos84 = new ChessPositionImpl(8, 4);
-        addPiece(pos84, bQueen);
-
         ChessPiece bKing = new KingPiece(ChessGame.TeamColor.BLACK);
-        ChessPosition pos85 = new ChessPositionImpl(8, 5);
+        ChessPosition pos85 = new ChessPositionImpl(8, 4);
         addPiece(pos85, bKing);
+
+        ChessPiece bQueen = new QueenPiece(ChessGame.TeamColor.BLACK);
+        ChessPosition pos84 = new ChessPositionImpl(8, 5);
+        addPiece(pos84, bQueen);
 
         ChessPiece bBishop2 = new BishopPiece(ChessGame.TeamColor.BLACK);
         ChessPosition pos86 = new ChessPositionImpl(8, 6);

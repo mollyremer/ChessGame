@@ -1,16 +1,11 @@
 package handlers;
 
-import com.google.gson.Gson;
 import requests.LoginRequest;
 import results.LoginResult;
 import services.LoginService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-
-import java.util.Objects;
-
-import static dataAccess.TreeDatabase.dbUsers;
 
 public class LoginHandler extends HandlerParent implements Route {
     @Override

@@ -1,5 +1,3 @@
-package passoffTests.serverTests;
-
 import chess.ChessGame;
 import chess.impl.ChessGameImpl;
 import dataAccess.AuthDAO;
@@ -10,6 +8,7 @@ import models.AuthToken;
 import models.Game;
 import models.User;
 import org.junit.jupiter.api.*;
+import results.ListResult;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -199,10 +198,10 @@ public class MyDatabaseTests {
         gameDAO.insertGame(new Game(0, null, null, "game1", new ChessGameImpl()));
         gameDAO.insertGame(new Game(0, null, null, "game2", new ChessGameImpl()));
 
-        Object[] games = gameDAO.findAllGames();
+        Collection<ListResult.GameInformation> games = gameDAO.findAllGames();
 
         Assertions.assertNotNull(games, "There should be a list of games");
-        Assertions.assertEquals(2, games.length, "Should have 2 games");
+        Assertions.assertEquals(2, games.size(), "Should have 2 games");
     }
 
     @Test

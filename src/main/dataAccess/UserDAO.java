@@ -3,9 +3,6 @@ package dataAccess;
 import models.User;
 
 import java.sql.SQLException;
-import java.util.Objects;
-
-import static dataAccess.TreeDatabase.dbUsers;
 
 public class UserDAO {
 

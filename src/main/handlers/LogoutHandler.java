@@ -1,13 +1,10 @@
 package handlers;
-import com.google.gson.Gson;
 import requests.DefaultRequest;
 import results.DefaultResult;
 import services.LogoutService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-
-import java.util.Objects;
 
 public class LogoutHandler extends HandlerParent implements Route {
     @Override

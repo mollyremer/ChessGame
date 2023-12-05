@@ -6,6 +6,9 @@ public class AuthToken {
     private String authToken;
     private String username;
 
+    public AuthToken() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

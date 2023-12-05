@@ -1,7 +1,5 @@
 package results;
 
-import requests.LoginRequest;
-
 public class LoginResult extends DefaultResult{
     private String authToken;
     private String username;
@@ -17,6 +15,11 @@ public class LoginResult extends DefaultResult{
         this.message = message;
         this.authToken = authToken;
         this.username = username;
+    }
+
+    public LoginResult(String username, String authToken){
+        this.username = username;
+        this.authToken = authToken;
     }
 
     public String getAuthToken() {

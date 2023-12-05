@@ -3,8 +3,12 @@ package services;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
+import models.Game;
 import requests.DefaultRequest;
 import results.ListResult;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ListService {
     /**
@@ -16,11 +20,11 @@ public class ListService {
         AuthDAO authDAO = new AuthDAO();
         GameDAO gameDAO = new GameDAO();
 
-        if(authDAO.findAuthToken(request.getStrAuthToken()) == null){
+        if(authDAO.findAuthToken(request.getAuthToken()) == null){
             return new ListResult(null, "Error: unauthorized");
         }
 
-        Object[] gameArray = gameDAO.findAllGames();
+        ArrayList<ListResult.GameInformation> gameArray = gameDAO.findAllGames();
 
         return new ListResult(gameArray, null);
     }

@@ -1,5 +1,3 @@
-package passoffTests.serverTests;
-
 import chess.ChessGame;
 import dataAccess.DataAccessException;
 import org.junit.jupiter.api.*;
@@ -66,7 +64,7 @@ public class MyTests {
         @Order(3)
         @DisplayName("Positive User Login")
         public void successLogin() throws DataAccessException {
-            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
+            LoginRequest loginRequest = new LoginRequest("user1", "password1");
             LoginResult loginResult = service.login(loginRequest);
 
             Assertions.assertNull(loginResult.getMessage(), "There shouldn't be an error message");
@@ -78,7 +76,7 @@ public class MyTests {
         @Order(4)
         @DisplayName("Negative User Login")
         public void negativeLogin() throws DataAccessException {
-            LoginRequest loginRequest = new LoginRequest("user1", "badPassword", null);
+            LoginRequest loginRequest = new LoginRequest("user1", "badPassword");
             LoginResult loginResult = service.login(loginRequest);
 
             Assertions.assertEquals("Error: unauthorized", loginResult.getMessage(), "There should be an error message");
@@ -106,7 +104,7 @@ public class MyTests {
         @DisplayName("Positive User Logout")
         public void positiveLogout() throws DataAccessException {
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
+            LoginRequest loginRequest = new LoginRequest("user1", "password1");
             LoginResult loginResult = loginService.login(loginRequest);
             String strAuthToken = loginResult.getAuthToken();
 
@@ -145,7 +143,7 @@ public class MyTests {
             RegisterRequest registerRequest = new RegisterRequest("user1", "password1", "email1");
             RegisterResult registerResult = registerService.register(registerRequest);
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
+            LoginRequest loginRequest = new LoginRequest("user1", "password1");
             LoginResult loginResult = loginService.login(loginRequest);
             String strAuthToken = loginResult.getAuthToken();
         }
@@ -191,7 +189,7 @@ public class MyTests {
             RegisterRequest registerRequest = new RegisterRequest("user1", "password1", "email1");
             RegisterResult registerResult = registerService.register(registerRequest);
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
+            LoginRequest loginRequest = new LoginRequest("user1", "password1");
             LoginResult loginResult = loginService.login(loginRequest);
             strAuthToken = loginResult.getAuthToken();
             CreateService createService = new CreateService();
@@ -239,7 +237,7 @@ public class MyTests {
             RegisterRequest registerRequest = new RegisterRequest("user1", "password1", "email1");
             RegisterResult registerResult = registerService.register(registerRequest);
             LoginService loginService = new LoginService();
-            LoginRequest loginRequest = new LoginRequest("user1", "password1", null);
+            LoginRequest loginRequest = new LoginRequest("user1", "password1");
             LoginResult loginResult = loginService.login(loginRequest);
             strAuthToken = loginResult.getAuthToken();
             CreateService createService = new CreateService();

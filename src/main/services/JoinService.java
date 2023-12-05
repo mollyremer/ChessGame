@@ -4,11 +4,9 @@ import chess.ChessGame;
 import dataAccess.AuthDAO;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAO;
-import dataAccess.UserDAO;
 import models.AuthToken;
 import requests.JoinRequest;
 import results.DefaultResult;
-import results.LoginResult;
 
 public class JoinService {
     /**
@@ -36,13 +34,13 @@ public class JoinService {
             return new DefaultResult("Error: bad request");
         }
 
-        if (authDAO.findAuthToken(request.getStrAuthToken()) == null){
+        if (authDAO.findAuthToken(request.getAuthToken()) == null){
             return new DefaultResult("Error: unauthorized");
         }
 
         if (playercolor != null){
             try {
-                AuthToken objAuthToken = authDAO.findAuthToken(request.getStrAuthToken());
+                AuthToken objAuthToken = authDAO.findAuthToken(request.getAuthToken());
                 gameDAO.claimSpot(objAuthToken.getUsername(), playercolor, gameID);
             } catch (DataAccessException e){
                 return new DefaultResult(e.getMessage());

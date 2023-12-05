@@ -9,7 +9,11 @@ public class CreateRequest extends DefaultRequest{
      */
     public CreateRequest(String gameName, String strAuthToken){
         this.gameName = gameName;
-        this.strAuthToken = strAuthToken;
+        this.authToken = strAuthToken;
+    }
+
+    public CreateRequest(String gameName){
+        this.gameName = gameName;
     }
 
     public String getGameName() {
