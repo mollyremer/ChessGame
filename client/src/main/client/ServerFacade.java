@@ -11,11 +11,12 @@ import java.io.*;
 import java.net.*;
 import java.util.Objects;
 
+import static client.Client.clientAuthToken;
 import static java.lang.System.out;
 
 public class ServerFacade {
     private final String serverURL;
-    public static AuthToken clientAuthToken = new AuthToken();
+
     public ServerFacade(String serverURL){ this.serverURL = serverURL; }
 
     public RegisterResult register(RegisterRequest request){

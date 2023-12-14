@@ -10,7 +10,7 @@ public class ListResult extends DefaultResult{
     /**
      * games A collection of ListEntryResult objects
      */
-//    public Collection<GameInformation> games;
+
     public ArrayList<GameInformation> games;
 
     public ListResult(ArrayList<GameInformation> games, String message) {
@@ -43,29 +43,7 @@ public class ListResult extends DefaultResult{
         public String getGameName(){
             return gameName;
         }
+        public int getGameID() {return gameID;}
     }
-
-//    public String getGameNames(){
-//        StringBuilder gameNames = new StringBuilder();
-//
-//        for (GameInformation game : games){
-//            if (game.getGameName() != null){
-//                gameNames.append(game.getGameName());
-//                if (game.whiteUsername != null){
-//                    gameNames.append(" (White player is ");
-//                    gameNames.append(game.whiteUsername);
-//                    gameNames.append(")");
-//                }
-//                if (game.blackUsername != null){
-//                    gameNames.append(" (Black player is ");
-//                    gameNames.append(game.whiteUsername);
-//                    gameNames.append(")");
-//                }
-//                gameNames.append(",");
-//            }
-//        }
-//
-//        return gameNames.toString();
-//    }
 
 }

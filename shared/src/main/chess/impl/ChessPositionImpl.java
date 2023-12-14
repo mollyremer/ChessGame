@@ -33,4 +33,22 @@ public class ChessPositionImpl implements ChessPosition {
     public int hashCode() {
         return Objects.hash(row, column);
     }
+
+    public String toString(){
+        return "" + intToString(column) + "" + row;
+    }
+
+    private char intToString(int v){
+        switch (v) {
+            case 1 -> { return 'h';}
+            case 2 -> { return 'g';}
+            case 3 -> { return 'f';}
+            case 4 -> { return 'e';}
+            case 5 -> { return 'd';}
+            case 6 -> { return 'c';}
+            case 7 -> { return 'b';}
+            case 8 -> { return 'a';}
+        }
+        return 0;
+    }
 }

@@ -1,5 +1,6 @@
 import handlers.*;
 import spark.Spark;
+import webSocket.WebSocketHandler;
 
 public class Server {
     public static void main(String[] args) {
@@ -8,6 +9,7 @@ public class Server {
 
     private void run() {
         Spark.port(8080);
+        Spark.webSocket("/connect", WebSocketHandler.class);
 
         Spark.externalStaticFileLocation("web");
 
@@ -18,5 +20,10 @@ public class Server {
         Spark.post("/game", new CreateHandler());
         Spark.put("/game", new JoinHandler());
         Spark.get("/game", new ListHandler());
+
+        Spark.get("/echo/:msg", (req, res) -> "HTTP response: " + req.params(":msg"));
     }
+
+
+
 }

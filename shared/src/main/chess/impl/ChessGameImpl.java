@@ -33,7 +33,7 @@ public class ChessGameImpl implements ChessGame {
         }
         s = s.substring(1);
 
-        currentBoard = new ChessBoardImpl(s);
+        this.currentBoard = new ChessBoardImpl(s);
     }
 
     public ChessGameImpl(){

@@ -1,27 +1,28 @@
 package ui;
 
 import chess.ChessGame;
-import chess.impl.ChessGameImpl;
 import client.ServerFacade;
-import models.AuthToken;
+import client.WebSocketCommunicator;
 import requests.CreateRequest;
 import requests.JoinRequest;
-import results.CreateResult;
 import results.DefaultResult;
 import results.ListResult;
+import webSocketMessages.userCommands.JoinObserverCommand;
+import webSocketMessages.userCommands.JoinPlayerCommand;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import static client.Client.clientAuthToken;
 import static java.lang.System.exit;
-import static java.lang.System.out;
 
-public class PostLogin {
+public class PostLoginUI {
     private final PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+    private final WebSocketCommunicator webSocket = new WebSocketCommunicator("http://localhost:8080");
     private final ServerFacade server = new ServerFacade("http://localhost:8080");
 
-    public PostLogin(){
+    public PostLoginUI(){
         Scanner scanner = new Scanner(System.in);
         loggedInScreen(scanner);
     }
@@ -61,7 +62,7 @@ public class PostLogin {
         } else{
             out.println("Logged out");
             out.println();
-            new PreLogin();
+            new PreLoginUI();
         }
     }
 
@@ -116,13 +117,21 @@ public class PostLogin {
             JoinRequest joinRequest = new JoinRequest(colorToJoin, gameToJoin.gameID);
 
             DefaultResult result = server.joinGame(joinRequest);
+
+            if (colorToJoin == null){
+                JoinObserverCommand command = new JoinObserverCommand(clientAuthToken.getAuthToken(), gameToJoin.gameID);
+                webSocket.sendCommand(command);
+            } else{
+                JoinPlayerCommand command = new JoinPlayerCommand(clientAuthToken.getAuthToken(), gameToJoin.gameID, colorToJoin);
+                webSocket.sendCommand(command);
+            }
+
             if (result == null || result.getMessage() != null){
                 loggedInScreen(scanner);
             } else{
                 out.println();
-                //FIXME: creates a blank chess game
-                ChessGame blankChessGame = new ChessGameImpl();
-                new GamePlay(blankChessGame, ChessGame.TeamColor.WHITE);
+
+                new GamePlayUI(gameToJoin);
             }
 
         } catch (Exception e){

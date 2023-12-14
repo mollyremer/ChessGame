@@ -20,7 +20,7 @@ public class Database {
     /**
      * Gets a connection to the database.
      *
-     * @return Connection the connection.
+     * @return webSocket.Connection the connection.
      * @throws DataAccessException if a data access error occurs.
      */
     public Connection getConnection() throws DataAccessException {

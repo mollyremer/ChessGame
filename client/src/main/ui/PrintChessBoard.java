@@ -4,8 +4,6 @@ import chess.ChessBoard;
 import chess.ChessGame;
 import chess.ChessPiece;
 import chess.ChessPosition;
-import chess.impl.ChessBoardImpl;
-import chess.impl.ChessGameImpl;
 import chess.impl.ChessPositionImpl;
 
 import java.io.PrintStream;
@@ -15,7 +13,7 @@ import java.util.List;
 
 import static ui.EscapeSequences.*;
 
-public class GamePlay {
+public class PrintChessBoard {
 
     private static final PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     private static final int BOARD_SIZE = 8;
@@ -23,7 +21,7 @@ public class GamePlay {
     List<ChessPosition> allChessPositions = new ArrayList<>();
     private ChessGame.TeamColor teamColor;
 
-    public GamePlay(ChessGame chessGame, ChessGame.TeamColor teamColor){
+    public PrintChessBoard(ChessGame chessGame, ChessGame.TeamColor teamColor){
         this.teamColor = teamColor;
 
         for (int i = 1; i < BOARD_SIZE + 1; i++){
@@ -33,9 +31,13 @@ public class GamePlay {
             }
         }
 
-        createWhiteBoard(chessGame.getBoard());
+        if (teamColor == ChessGame.TeamColor.WHITE) {
+            createWhiteBoard(chessGame.getBoard());
+        } else{
+            createBlackBoard(chessGame.getBoard());
+        }
         out.println();
-        createBlackBoard(chessGame.getBoard());
+
 
     }
 
@@ -45,7 +47,7 @@ public class GamePlay {
 
         drawBlackHeaders();
 
-        for (int j = BOARD_SIZE ; j > 0 ; j--) {
+        for (int j = 1; j < BOARD_SIZE + 1; j++) {
             rowLabel(j);
             for (int i = 1; i < BOARD_SIZE + 1; i += 2) {
                 if (chessBoard.getPiece(allChessPositions.get(positionIndex)) == null) {
@@ -84,8 +86,7 @@ public class GamePlay {
         int positionIndex = 63;
 
         drawWhiteHeaders();
-
-        for (int j = 1; j < BOARD_SIZE + 1; j++) {
+        for (int j = BOARD_SIZE ; j > 0 ; j--) {
             rowLabel(j);
             for (int i = 1; i < BOARD_SIZE + 1; i += 2) {
                 if (chessBoard.getPiece(allChessPositions.get(positionIndex)) == null) {
@@ -170,38 +171,32 @@ public class GamePlay {
 
     private void printRook(int bkg, ChessGame.TeamColor txt){
         colorPicker(bkg, txt);
-        if (txt == ChessGame.TeamColor.WHITE) out.print(WHITE_ROOK);
-        else out.print(BLACK_ROOK);
+        out.print(BLACK_ROOK);
     }
 
     private void printKnight(int bkg, ChessGame.TeamColor txt){
         colorPicker(bkg, txt);
-        if (txt == ChessGame.TeamColor.WHITE) out.print(WHITE_KNIGHT);
-        else out.print(BLACK_KNIGHT);
+        out.print(BLACK_KNIGHT);
     }
 
     private void printBishop(int bkg, ChessGame.TeamColor txt){
         colorPicker(bkg, txt);
-        if (txt == ChessGame.TeamColor.WHITE) out.print(WHITE_BISHOP);
-        else out.print(BLACK_BISHOP);
+        out.print(BLACK_BISHOP);
     }
 
     private void printKing(int bkg, ChessGame.TeamColor txt){
         colorPicker(bkg, txt);
-        if (txt == ChessGame.TeamColor.WHITE) out.print(WHITE_KING);
-        else out.print(BLACK_KING);
+        out.print(BLACK_KING);
     }
 
     private void printQueen(int bkg, ChessGame.TeamColor txt){
         colorPicker(bkg, txt);
-        if (txt == ChessGame.TeamColor.WHITE) out.print(WHITE_QUEEN);
-        else out.print(BLACK_QUEEN);
+        out.print(BLACK_QUEEN);
     }
 
     private void printPawn(int bkg, ChessGame.TeamColor txt){
         colorPicker(bkg, txt);
-        if (txt == ChessGame.TeamColor.WHITE) out.print(WHITE_PAWN);
-        else out.print(BLACK_PAWN);
+        out.print(BLACK_PAWN);
     }
 
     private void colorPicker(int bkg, ChessGame.TeamColor txt){
@@ -217,6 +212,7 @@ public class GamePlay {
         else blackBG();
         out.print(EMPTY);
     }
+
 
     private static void whiteText() {
         out.print(SET_TEXT_COLOR_WHITE);

@@ -12,14 +12,13 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
-import static java.lang.System.out;
 import static ui.EscapeSequences.*;
 
-public class PreLogin {
+public class PreLoginUI {
     private final PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     private final ServerFacade server = new ServerFacade("http://localhost:8080");
 
-    public PreLogin(){
+    public PreLoginUI(){
         Scanner scanner = new Scanner(System.in);
         out.print(SET_BG_COLOR_BLACK);
         out.print(SET_TEXT_COLOR_WHITE);
@@ -69,7 +68,7 @@ public class PreLogin {
         } else{
             out.println("Successfully registered and logged in");
             out.println();
-            new PostLogin();
+            new PostLoginUI();
         }
     }
 
@@ -86,7 +85,7 @@ public class PreLogin {
         } else{
             out.println("Successfully registered and logged in");
             out.println();
-            new PostLogin();
+            new PostLoginUI();
         }
     }
 }

@@ -49,6 +49,56 @@ public class GameDAO {
         }
     }
 
+    public void updateGame(Game game) throws DataAccessException {
+        if (game == null){
+            throw new DataAccessException("Error: null game");
+        }
+        String gameString = game.getGame().serialize();
+        var connection = db.getConnection();
+        String sql = "UPDATE games SET whiteUsername = ?, blackUsername = ?, gameName = ?, game = ?, state = ? WHERE gameID = ?";
+        try (var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, game.getWhiteUsername());
+            preparedStatement.setString(2, game.getBlackUsername());
+            preparedStatement.setString(3, game.getGameName());
+            preparedStatement.setString(4, gameString);
+            preparedStatement.setInt(5, game.getGameID());
+            preparedStatement.setInt(6, game.getState());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            throw new DataAccessException(e.getMessage());
+        } finally {
+            db.closeConnection(connection);
+        }
+    }
+
+    public void updateField(int gameID, String fieldToChange, String change) throws DataAccessException {
+        var connection = db.getConnection();
+        String sql = "UPDATE games SET " + fieldToChange + " = ? WHERE gameID = ?";
+        try (var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, change);
+            preparedStatement.setInt(2, gameID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            throw new DataAccessException(e.getMessage());
+        } finally {
+            db.closeConnection(connection);
+        }
+    }
+
+    public void updateField(int gameID, String fieldToChange, int change) throws DataAccessException {
+        var connection = db.getConnection();
+        String sql = "UPDATE games SET " + fieldToChange + " = ? WHERE gameID = ?";
+        try (var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, change);
+            preparedStatement.setInt(2, gameID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            throw new DataAccessException(e.getMessage());
+        } finally {
+            db.closeConnection(connection);
+        }
+    }
+
     /**
      * Inserts a game into the database.
      * @param game The game object to insert.
@@ -60,9 +110,8 @@ public class GameDAO {
         }
         String gameString = game.getGame().serialize();
 
-
         var connection = db.getConnection();
-        String sql = "INSERT INTO games (gameID, whiteUsername, blackUsername, gameName, game) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO games (gameID, whiteUsername, blackUsername, gameName, game, state) VALUES (?, ?, ?, ?, ?, ?)";
         try (var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             int specialGameID = abs(UUID.randomUUID().hashCode());
             game.setGameID(specialGameID);
@@ -71,6 +120,7 @@ public class GameDAO {
             preparedStatement.setString(3, game.getBlackUsername());
             preparedStatement.setString(4, game.getGameName());
             preparedStatement.setString(5, gameString);
+            preparedStatement.setInt(6, game.getState());
             preparedStatement.executeUpdate();
             var result = preparedStatement.getGeneratedKeys();
         } catch (SQLException e){
@@ -98,7 +148,7 @@ public class GameDAO {
                             resultSet.getString("whiteUsername"),
                             resultSet.getString("blackUsername"),
                             resultSet.getString("gameName"),
-                            game);
+                            game, resultSet.getInt("state"));
                 }
             } catch (SQLException e) {
                 throw new SQLException();

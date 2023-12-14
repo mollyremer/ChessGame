@@ -46,8 +46,8 @@ public class ChessBoardImpl implements ChessBoard {
             ChessGame.TeamColor pieceColor;
             ChessPiece piece = null;
 
-            row = s.charAt(0);
-            col = s.charAt(1);
+            row = s.charAt(0) - '0';
+            col = s.charAt(1) - '0';
             ChessPosition position = new ChessPositionImpl(row, col);
 
             if (s.charAt(2) == 'W'){

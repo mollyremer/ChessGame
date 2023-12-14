@@ -10,6 +10,7 @@ public class Game {
     private String blackUsername;
     private String gameName;
     private ChessGameImpl game;
+    private int state;
 
     @Override
     public boolean equals(Object o) {
@@ -39,8 +40,17 @@ public class Game {
         this.blackUsername = blackUsername;
         this.gameName = gameName;
         this.game = game;
+        this.state = 0;
     }
 
+    public Game(int gameID, String whiteUsername, String blackUsername, String gameName, ChessGameImpl game, int state){
+        this.gameID = gameID;
+        this.whiteUsername = whiteUsername;
+        this.blackUsername = blackUsername;
+        this.gameName = gameName;
+        this.game = game;
+        this.state = state;
+    }
 
     public int getGameID() {
         return gameID;
@@ -80,5 +90,13 @@ public class Game {
 
     public void setGame(ChessGameImpl game) {
         this.game = game;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
